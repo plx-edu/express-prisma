@@ -32,3 +32,8 @@
    -  update your _schema.prisma_ file
 -  npx prisma migrate dev --name init
 -  update _app.ts_ file
+
+### Cors
+
+-  npm install cors
+-  npm install -D @types/cors
