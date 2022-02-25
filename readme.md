@@ -1,8 +1,9 @@
-## Steps:
+# _Simple_ express prisma API
+
+## Project setup:
 
 -  npm install express
 -  npm install -D typescript ts-node nodemon @types/express @types/node
-   -  touch _app.ts_:
    -  add to **package.json** _scripts_:
    ```json
    "scripts": {
@@ -17,7 +18,7 @@
    	"esModuleInterop": true
    ```
 
--  in _app.ts_
+-  touch _app.ts_:
    -  implement base working express
 -  npm run start
 
