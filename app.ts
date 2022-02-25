@@ -20,11 +20,28 @@ app.get("/", (req, res) => {
 	res.send("Hello from Express");
 });
 
-// implémentation de Prisma
+/////////////////////////////////////////////////////////////////////
+/////////////////// implémentation de Prisma ////////////////////////
+/////////////////////////// category ////////////////////////////////
 // exemple méthode "get" (Read) de données dans la DB
 app.get("/category", async (req, res) => {
 	const category = await prisma.category.findMany();
 	res.json(category);
+});
+app.get("/category/:id/:todo?", async (req, res) => {
+	const {id, todo} = req.params;
+
+	if (todo === "todo") {
+		const todo = await prisma.todo.findMany({
+			where: {categoryId: +id},
+		});
+		res.json(todo);
+	} else {
+		const category = await prisma.category.findUnique({
+			where: {id: +id},
+		});
+		res.json(category);
+	}
 });
 
 // exemple méthode "post" (Create) de données dans la DB
@@ -78,12 +95,14 @@ app.delete("/category/:id", async (req, res) => {
 	}
 });
 
-app.get("/todo/:categoryId?", async (req, res) => {
-	const {categoryId} = req.params;
+/////////////////////////////////////////////////////////////////////
+///////////////////////////// todo //////////////////////////////////
+app.get("/todo/:id?", async (req, res) => {
+	const {id} = req.params;
 
-	if (categoryId && !isNaN(+categoryId)) {
-		const todo = await prisma.todo.findMany({
-			where: {categoryId: +categoryId},
+	if (id && !isNaN(+id)) {
+		const todo = await prisma.todo.findUnique({
+			where: {id: +id},
 		});
 		res.json(todo);
 	} else {
