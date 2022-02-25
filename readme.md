@@ -1,0 +1,29 @@
+## Steps:
+
+-  npm install express
+-  npm install -D typescript ts-node nodemon @types/express @types/node
+   -  touch _app.ts_:
+   -  add to **package.json** _scripts_:
+   ```json
+   "scripts": {
+   	"start": "nodemon app.ts"
+   }
+   ```
+-  touch _tsconfig.json_
+
+   -  important to add:
+
+   ```json
+   	"esModuleInterop": true
+   ```
+
+-  in _app.ts_
+   -  implement base working express
+-  npm run start
+
+-  npm install prisma
+-  npx prisma init
+   -  update your _.env_ file
+   -  update your _schema.prisma_ file
+-  npx prisma migrate dev --name init
+-  update _app.ts_ file
