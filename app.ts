@@ -19,13 +19,13 @@ app.get("/", (req, res) => {
 });
 
 // implémentation de Prisma
-// exemple get de données dans la DB
+// exemple méthode "get" (Read) de données dans la DB
 app.get("/category", async (req, res) => {
 	const category = await prisma.category.findMany();
 	res.json(category);
 });
 
-// exemple post de données dans la DB
+// exemple méthode "post" (Create) de données dans la DB
 app.post("/category", async (req, res) => {
 	const {name} = req.body;
 
@@ -34,6 +34,40 @@ app.post("/category", async (req, res) => {
 			data: {
 				name,
 			},
+		});
+		res.json(category);
+	} catch (error) {
+		print(error);
+		res.send(error);
+	}
+});
+
+// exemple méthode "put" (Update) de données dans la DB
+app.put("/category/:id", async (req, res) => {
+	const {id} = req.params;
+	const {name} = req.body;
+
+	try {
+		const category = await prisma.category.update({
+			where: {id: +id},
+			data: {
+				name,
+			},
+		});
+		res.json(category);
+	} catch (error) {
+		print(error);
+		res.send(error);
+	}
+});
+
+// exemple méthode "delete" (Delete) de données dans la DB
+app.delete("/category/:id", async (req, res) => {
+	const {id} = req.params;
+
+	try {
+		const category = await prisma.category.delete({
+			where: {id: +id},
 		});
 		res.json(category);
 	} catch (error) {
