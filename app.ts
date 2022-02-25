@@ -1,5 +1,6 @@
 import express from "express";
 import {PrismaClient} from "@prisma/client";
+import cors from "cors";
 
 const app = express();
 const port = 3005;
@@ -12,6 +13,7 @@ const print = (ed: any) => {
 
 // consomme les données json envoyé
 app.use(express.json());
+app.use(cors());
 
 // implémentation basique d'express
 app.get("/", (req, res) => {
