@@ -76,9 +76,18 @@ app.delete("/category/:id", async (req, res) => {
 	}
 });
 
-app.get("/todo", async (req, res) => {
-	const todo = await prisma.todo.findMany();
-	res.json(todo);
+app.get("/todo/:categoryId?", async (req, res) => {
+	const {categoryId} = req.params;
+
+	if (categoryId && !isNaN(+categoryId)) {
+		const todo = await prisma.todo.findMany({
+			where: {categoryId: +categoryId},
+		});
+		res.json(todo);
+	} else {
+		const todo = await prisma.todo.findMany();
+		res.json(todo);
+	}
 });
 
 app.post("/todo", async (req, res) => {
@@ -90,6 +99,39 @@ app.post("/todo", async (req, res) => {
 				categoryId,
 				task,
 			},
+		});
+		res.json(todo);
+	} catch (error) {
+		print(error);
+		res.send(error);
+	}
+});
+
+app.put("/todo/:id", async (req, res) => {
+	const {id} = req.params;
+	const {categoryId, task} = req.body;
+
+	try {
+		const todo = await prisma.todo.update({
+			where: {id: +id},
+			data: {
+				categoryId,
+				task,
+			},
+		});
+		res.json(todo);
+	} catch (error) {
+		print(error);
+		res.send(error);
+	}
+});
+
+app.delete("/todo/:id", async (req, res) => {
+	const {id} = req.params;
+
+	try {
+		const todo = await prisma.todo.delete({
+			where: {id: +id},
 		});
 		res.json(todo);
 	} catch (error) {
