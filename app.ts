@@ -130,7 +130,7 @@ app.post("/todo", async (req, res) => {
 
 app.put("/todo/:id", async (req, res) => {
 	const {id} = req.params;
-	const {categoryId, task} = req.body;
+	const {categoryId, task, isDone} = req.body;
 
 	try {
 		const todo = await prisma.todo.update({
@@ -138,6 +138,7 @@ app.put("/todo/:id", async (req, res) => {
 			data: {
 				categoryId,
 				task,
+				isDone,
 			},
 		});
 		res.json(todo);
